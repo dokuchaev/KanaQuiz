@@ -1,17 +1,19 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <KanaQuiz />
 </template>
-
+<style>
+  @import './assets/styles/style.css';
+</style>
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import KanaQuiz from './components/KanaQuiz.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    KanaQuiz
   }
 }
+
 </script>
 
 <style>

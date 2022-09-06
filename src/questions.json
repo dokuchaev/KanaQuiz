@@ -1,0 +1,33 @@
+[
+    {
+  
+      "question":
+        "ア",
+        "answers":  { "a": "ku", "b": "a", "c": "na", "d": "pa" } ,
+        "correctAnswer": "b"
+    },
+    {
+
+        "question": "イ",
+        "answers": { "a": "2005", "b": "2008", "c": "2003", "d": "2004" },
+        "correctAnswer": "d"
+    },
+    {
+     
+        "question": "ウ",
+        "answers": { "a": "1", "b": "2", "c": "3", "d": "3" },
+        "correctAnswer": "b"
+    },
+    {
+    
+        "question": "エ",
+        "answers": { "a": "1", "b": "2", "c": "3", "d": "4" },
+        "correctAnswer": "b"
+    },
+    {
+      
+        "question": "オ",
+        "answers": { "a": "1", "b": "2", "c": "3", "d": "4" },
+        "correctAnswer": "b"
+    }
+  ]
