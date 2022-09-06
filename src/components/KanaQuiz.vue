@@ -14,8 +14,7 @@
             <div class="row">
              
 
-                 <div class="card" v-for="(answer, index) in questions[idx].answers" :key="answer.id">
-
+              <div class="card"  v-for="[ index, answer ] in shuffledAnswers" :key="answer.id">
             <label
   
               :key="index"
@@ -120,6 +119,18 @@ export default {
     randomQuestions () {
     usersData.sort(() => Math.random() - 0.5)
     return false
+  },
+
+  shuffledAnswers() {
+    const shuffledAnswers = [];
+
+    for (
+      const answers = Object.entries(this.questions[this.idx].answers);
+      answers.length;
+      shuffledAnswers.push(answers.splice(Math.random() * answers.length | 0, 1)[0])
+    ) ;
+
+    return shuffledAnswers;
   },
 
 },
