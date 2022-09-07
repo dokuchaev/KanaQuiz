@@ -1,4 +1,5 @@
 # Kana quiz
+demo https://quiz-kana.netlify.app/
 
 ### Compiles and hot-reloads for development
 ```
@@ -10,7 +11,4 @@ npm run serve
 npm run build
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
+

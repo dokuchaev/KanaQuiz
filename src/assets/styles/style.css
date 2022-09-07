@@ -846,7 +846,8 @@ video {
 .title{
   text-align: center;
     margin-bottom: 20px;
-    font-size: 36px;
+    font-size: 44px;
+    line-height: 1;
     font-weight: bold;
     color: var(--text-primary-color);
 }

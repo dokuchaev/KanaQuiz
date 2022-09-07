@@ -1,33 +1,32 @@
 [
     {
-  
-      "question":
-        "ア",
+        "id": 1,
+      "question": "あ",
         "answers":  { "a": "ku", "b": "a", "c": "na", "d": "pa" } ,
         "correctAnswer": "b"
     },
     {
-
-        "question": "イ",
-        "answers": { "a": "2005", "b": "2008", "c": "2003", "d": "2004" },
+        "id": 2,
+        "question": "い",
+        "answers": { "a": "i", "b": "bi", "c": "e", "d": "ku" },
+        "correctAnswer": "a"
+    },
+    {
+        "id": 3,
+        "question": "う",
+        "answers": { "a": "yo", "b": "su", "c": "u", "d": "me" },
+        "correctAnswer": "c"
+    },
+    {
+        "id": 4,
+        "question": "え",
+        "answers": { "a": "e", "b": "ke", "c": "nu", "d": "ra" },
+        "correctAnswer": "a"
+    },
+    {
+        "id": 5,
+        "question": "お",
+        "answers": { "a": "a", "b": "ra", "c": "yo", "d": "o" },
         "correctAnswer": "d"
-    },
-    {
-     
-        "question": "ウ",
-        "answers": { "a": "1", "b": "2", "c": "3", "d": "3" },
-        "correctAnswer": "b"
-    },
-    {
-    
-        "question": "エ",
-        "answers": { "a": "1", "b": "2", "c": "3", "d": "4" },
-        "correctAnswer": "b"
-    },
-    {
-      
-        "question": "オ",
-        "answers": { "a": "1", "b": "2", "c": "3", "d": "4" },
-        "correctAnswer": "b"
     }
   ]
