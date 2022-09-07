@@ -1,4 +1,6 @@
 <template>
+
+  
   <div >
         <h1 >
           KanaQuiz
@@ -36,26 +38,26 @@
           </div>
           </div>
            
-            <div class="mt-6 flow-root">
+            <div class="mt-6">
               <button
                 @click="nextQuestion"
                 v-show="selectedAnswer != '' && idx < count - 1"
-                class="float-right bg-indigo-600 text-white text-sm font-bold tracking-wide rounded-full px-5 py-2"
+                class="btn next-btn"
               >
                 Next &gt;
               </button>
               <button
                 @click="showResults"
                 v-show="selectedAnswer != '' && idx == count - 1"
-                class="float-right bg-indigo-600 text-white text-sm font-bold tracking-wide rounded-full px-5 py-2"
+                class="btn"
               >
                 Finish
               </button>
             </div>
           </div>
           <div v-else>
-            <h2 class="text-bold text-3xl">Results</h2>
-            <div class="flex justify-start space-x-4 mt-6">
+            <h2 class="result-title">Results</h2>
+            <div class="result-text">
               <p>
                 Correct Answers:
                 <span class="text-2xl text-green-700 font-bold"
@@ -69,10 +71,10 @@
                 >
               </p>
             </div>
-            <div class="mt-6 flow-root">
+            <div class="mt-6">
               <button
                 @click="resetQuiz"
-                class="float-right bg-indigo-600 text-white text-sm font-bold tracking-wide rounded-full px-5 py-2"
+                class="btn play-again-btn"
               >
                 Play again
               </button>

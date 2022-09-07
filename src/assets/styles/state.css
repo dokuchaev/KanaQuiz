@@ -1,0 +1,71 @@
+
+:root {
+    --light-bg-color: #{$color-light-white};
+    --light-text-color: #{$color-dark-grey};
+    --bg-color: #{$color-white};
+    --text-color: #{$color-black};
+    --dark-bg-color: #{$color-light-white};
+    --dark-text-color: #{$color-dark-grey};
+  }
+  
+  :root.dark-theme {
+    --light-bg-color: #{$color-dark-grey};
+    --light-text-color: #{$color-light-white};
+    --bg-color: #{$color-grey};
+    --text-color: #{$color-white};
+    --dark-bg-color: #{$color-dark-grey};
+    --dark-text-color: #{$color-white};
+  }
+  
+  @function theme-color($for) {
+    @return var(--#{$for}-color);
+  }
+  
+  @mixin theme-colors {
+    background-color: theme-color('bg');
+    color: theme-color('text');
+    fill: theme-color('text');
+  }
+  
+  @mixin light-theme-colors {
+    background-color: theme-color('light-bg');
+    color: theme-color('light-text');
+    fill: theme-color('light-text');
+  }
+  
+  @mixin dark-theme-colors {
+    background-color: theme-color('dark-bg');
+    color: theme-color('dark-text');
+    fill: theme-color('dark-text');
+  }
+
+
+
+
+:root {
+  --background-color-primary: #f3f4f6;
+  --background-color-secondary: #fff;
+  --accent-color: #cacaca;
+  --text-primary-color: #222;
+  --element-size: 5rem;
+  --hover-color: #f8f8f8;
+  
+  --btn-next: #f3f4f6;
+}
+
+/* Define styles for the root window with dark - mode preference */
+:root.dark-theme {
+  --background-color-primary: #070b0d;
+  --background-color-secondary: #151a1e;
+  --accent-color: #fff;
+  --text-primary-color: #fff;
+  --hover-color: #3a3a3a;
+  --btn-next: #fff;
+}
+
+
+.toggle-btn{
+    position: absolute;
+    top: 20px;
+    right: 30px;
+}

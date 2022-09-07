@@ -837,8 +837,9 @@ video {
   align-items: center;
   height: 120px;
     font-size: 26px;
-    color: #fff;
+    color: var(--text-primary-color);
     transition: ease-in-out .3s;
+    background-color: var(--background-color-secondary);
 }
 
 
@@ -847,7 +848,7 @@ video {
     margin-bottom: 20px;
     font-size: 36px;
     font-weight: bold;
-    color: #fff;
+    color: var(--text-primary-color);
 }
 
 h1{
@@ -855,16 +856,16 @@ h1{
 }
 
 body{
-  background: #070b0d;
+  
+  background-color: var(--background-color-primary);
 }
 
 .quiz-bg{
   max-width: 550px;
   margin: 0 auto;
-  background: #fff;
   padding: 50px;
   border-radius: 4px;
-  background: #151a1e;
+  background-color: var(--background-color-secondary);
 }
 
 
@@ -875,8 +876,8 @@ body{
 
 .hover\:bg-gray-100:hover {
   --tw-bg-opacity: 1;
-  background-color: rgba(243, 244, 246, var(--tw-bg-opacity));
-  color: #151a1e;
+  background-color:var(--hover-color);
+  color: var(--text-primary-color);
 }
 
 
@@ -890,4 +891,23 @@ body{
   --tw-bg-opacity: 1;
   background-color: rgba(167, 243, 208, var(--tw-bg-opacity));
   color: #151a1e;
+}
+
+
+.result-title{
+  font-size: 24px;
+  color: var(--text-primary-color);
+}
+
+
+.btn{
+  border-radius: 4px;
+  padding: 7px 35px;
+  background-color: var(--btn-next);
+}
+
+.result-text{
+  margin-top: 25px;
+    margin-bottom: 35px;
+    color: var(--text-primary-color);
 }
