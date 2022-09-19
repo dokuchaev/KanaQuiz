@@ -6,14 +6,46 @@
           KanaQuiz
         </h1>
         <div class="quiz-bg shadow-lg ">
+
+          
+
+          
+
+
           
           <div v-if="idx < count">
+
             
 
       <div v-for="questionw in randomQuestions" :key="questionw.id">
       </div>
+
+
+   
+      <div class="progressbar" >
+            <div v-for="item in questions" :key="item.id"
+            
+            class="p-item" 
+            :class="{
+             'bg-green-300': item.guessedRight,
+              'bg-red-300': item.guessedRight == false,
+              'bg-gray-200': !item.guessedRight,
+            
+            }"
+            
+       
+            >
+          
+            </div>
+         
+        </div>
+
+        
+            
             <p class="title">{{questions[idx]['question']}}</p>
             <div class="row">
+
+              
              
 
               <div class="card"  v-for="[ index, answer ] in shuffledAnswers" :key="answer.id">
@@ -44,7 +76,7 @@
                 v-show="selectedAnswer != '' && idx < count - 1"
                 class="btn next-btn"
               >
-                Next &gt;
+                Next
               </button>
               <button
                 @click="showResults"
@@ -102,10 +134,10 @@ import usersData from "../questions.json";
 export default {
   name: 'KanaQuiz',
   props: {
-    msg: String
+    msg: String,
   },
 
- 
+  
   data() {
     return {
       idx: 0,
@@ -114,6 +146,8 @@ export default {
       wrongAnswers: 0,
       count: 5,
       questions: usersData,
+  
+
     };
     
   },
@@ -133,20 +167,23 @@ export default {
     ) ;
 
     return shuffledAnswers;
+    
   },
 
 },
 
   
   methods: {
+
     answered(e) {
       this.selectedAnswer = e.target.value;
       if (this.selectedAnswer == this.questions[this.idx].correctAnswer) {
         this.correctAnswers++;
+        this.questions[this.idx].guessedRight = true;
       } else {
         this.wrongAnswers++;
+        this.questions[this.idx].guessedRight = false;
       }
-      
     },
     nextQuestion() {
       this.idx++;
@@ -156,18 +193,31 @@ export default {
     },
     showResults() {
       this.idx++;
-      
+
     },
     resetQuiz() {
       this.idx = 0;
       this.selectedAnswer = "";
       this.correctAnswers = 0;
       this.wrongAnswers = 0;
-      this.questions.sort(() => Math.random() - 0.5)
+      this.questions.sort(() => Math.random() - 0.5);
       
-    },
-  },
+      this.questions[this.idx].guessedRight = null;
+      this.questions.forEach((el) => ( 
+        el.guessedRight = null,
+        console.log(el)
+        
+        ));
 
+     
+  
+    },
+
+ 
+    
+   
+  },
+ 
 }
 
 </script>

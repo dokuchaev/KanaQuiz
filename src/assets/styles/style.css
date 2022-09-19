@@ -912,3 +912,43 @@ body{
     margin-bottom: 35px;
     color: var(--text-primary-color);
 }
+
+.next-btn{
+  position: relative;
+  padding: 7px 40px 7px 20px;
+}
+
+.next-btn:after{
+  content: '';
+  background: url('~@/assets/images/next-right-arrow.svg') no-repeat;
+  width: 20px;
+  height: 14px;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+
+
+.p-item{
+  height: 12px;
+  width: 12px;
+  margin: 0 5px;
+  border-radius: 3px;
+}
+
+.progressbar{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+.progressbar  .bg-gray-200{
+  background: var(--p-item);
+}
+.progressbar  .bg-red-300{
+  background: rgba(254, 202, 202, var(--tw-bg-opacity));
+}
+
+.progressbar  .bg-green-300{
+  background: rgba(167, 243, 208, var(--tw-bg-opacity));
+}
+
