@@ -1,32 +1,22 @@
 [
     {
         "id": 1,
-      "question": "あ",
-        "answers":  { "a": "ku", "b": "a", "c": "na", "d": "pa" } ,
-        "correctAnswer": "b"
+        "question": "あ",
+        "correctAnswer": "a"
     },
     {
         "id": 2,
         "question": "い",
-        "answers": { "a": "i", "b": "bi", "c": "e", "d": "ku" },
-        "correctAnswer": "a"
+        "correctAnswer": "i"
     },
     {
         "id": 3,
         "question": "う",
-        "answers": { "a": "yo", "b": "su", "c": "u", "d": "me" },
-        "correctAnswer": "c"
+        "correctAnswer": "u"
     },
     {
-        "id": 4,
-        "question": "え",
-        "answers": { "a": "e", "b": "ke", "c": "nu", "d": "ra" },
-        "correctAnswer": "a"
-    },
-    {
-        "id": 5,
-        "question": "お",
-        "answers": { "a": "a", "b": "ra", "c": "yo", "d": "o" },
-        "correctAnswer": "d"
+        "id": 3,
+        "question": "く",
+        "correctAnswer": "ku"
     }
-  ]
+]

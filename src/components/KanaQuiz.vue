@@ -1,223 +1,162 @@
 <template>
-
-  
-  <div >
-        <h1 >
-          KanaQuiz
-        </h1>
-        <div class="quiz-bg shadow-lg ">
-
-          
-
-          
-
-
-          
-          <div v-if="idx < count">
-
-            
-
-      <div v-for="questionw in randomQuestions" :key="questionw.id">
-      </div>
-
-
-   
-      <div class="progressbar" >
-            <div v-for="item in questions" :key="item.id"
-            
-            class="p-item" 
+  <div>
+    <h1>KanaQuiz</h1>
+    <div class="quiz-bg shadow-lg">
+      <div v-if="idx < questions.length">
+        <div class="progressbar">
+          <div
+            v-for="(item, index) in questions"
+            :key="index"
+            class="p-item"
             :class="{
-             'bg-green-300': item.guessedRight,
-              'bg-red-300': item.guessedRight == false,
-              'bg-gray-200': !item.guessedRight,
-            
+              'bg-green-300': item.guessedRight,
+              'bg-red-300': item.guessedRight === false,
+              'bg-gray-200': item.guessedRight === undefined,
             }"
-            
-       
-            >
-          
-            </div>
-         
+          ></div>
         </div>
 
-        
-            
-            <p class="title">{{questions[idx]['question']}}</p>
-            <div class="row">
-
-              
-             
-
-              <div class="card"  v-for="[ index, answer ] in shuffledAnswers" :key="answer.id">
+        <p class="title">{{ questions[idx].question }}</p>
+        <div class="row">
+          <div
+            class="card"
+            v-for="(answer, index) in shuffledAnswers"
+            :key="index"
+          >
             <label
-  
-              :key="index"
-              :for="index"
-              class=""
-              :class="[{'hover:bg-gray-100 cursor-pointer' : selectedAnswer == ''}, {'bg-green-200' : index == questions[idx].correctAnswer && selectedAnswer != ''}, {'bg-red-200' : selectedAnswer == index}]"
+              :for="`answer-${index}`"
+              :class="[
+                'option',
+                { 'bg-green-200': selectedAnswer === answer && answer === questions[idx].correctAnswer }, // подсветка правильного ответа
+                { 'bg-red-200': selectedAnswer === answer && answer !== questions[idx].correctAnswer }, // подсветка выбранного неправильного ответа
+                { 'bg-green-200': selectedAnswer && answer === questions[idx].correctAnswer && selectedAnswer !== answer } // подсветка правильного ответа, если выбран неправильный
+              ]"
             >
               <input
-                :id="index"
+                :id="`answer-${index}`"
                 type="radio"
                 class="hidden"
-                :value="index"
-                @change="answered($event)"
-                :disabled="selectedAnswer != ''"
+                :value="answer"
+                v-model="selectedAnswer"
+                @change="answered"
+                :disabled="!!selectedAnswer"
               />
-              {{answer}}
-              
+              {{ answer }}
             </label>
           </div>
-          </div>
-           
-            <div class="mt-6">
-              <button
-                @click="nextQuestion"
-                v-show="selectedAnswer != '' && idx < count - 1"
-                class="btn next-btn"
-              >
-                Next
-              </button>
-              <button
-                @click="showResults"
-                v-show="selectedAnswer != '' && idx == count - 1"
-                class="btn"
-              >
-                Finish
-              </button>
-            </div>
-          </div>
-          <div v-else>
-            <h2 class="result-title">Results</h2>
-            <div class="result-text">
-              <p>
-                Correct Answers:
-                <span class="text-2xl text-green-700 font-bold"
-                  >{{correctAnswers}}</span
-                >
-              </p>
-              <p>
-                Wrong Answers:
-                <span class="text-2xl text-red-700 font-bold"
-                  >{{wrongAnswers}}</span
-                >
-              </p>
-            </div>
-            <div class="mt-6">
-              <button
-                @click="resetQuiz"
-                class="btn play-again-btn"
-              >
-                Play again
-              </button>
-            </div>
-          </div>
+        </div>
+
+        <div class="mt-6" v-show="selectedAnswer">
+          <button
+            @click="nextQuestion"
+            v-show="selectedAnswer && idx < questions.length - 1"
+            class="btn next-btn"
+          >
+            Next
+          </button>
+          <button
+            @click="showResults"
+            v-show="selectedAnswer && idx === questions.length - 1"
+            class="btn"
+          >
+            Finish
+          </button>
         </div>
       </div>
+
+      <div v-else>
+        <h2 class="result-title">Results</h2>
+        <div class="result-text">
+          <p>
+            Correct Answers: <span class="text-2xl text-green-700 font-bold">{{ correctAnswers }}</span>
+          </p>
+          <p>
+            Wrong Answers: <span class="text-2xl text-red-700 font-bold">{{ wrongAnswers }}</span>
+          </p>
+        </div>
+        <div class="mt-6">
+          <button @click="resetQuiz" class="btn play-again-btn">
+            Play again
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-
-
-
-
-// function shuffleArray(array) {
-//   for (let i = array.length - 1; i > 0; i--) {
-//     const j = Math.floor(Math.random() * (i + 1))
-//     const temp = array[i]
-//     array[i] = array[j]
-//     array[j] = temp
-//   }
-// }
-
 import usersData from "../questions.json";
-export default {
-  name: 'KanaQuiz',
-  props: {
-    msg: String,
-  },
 
-  
+export default {
+  name: "KanaQuiz",
   data() {
     return {
       idx: 0,
       selectedAnswer: "",
       correctAnswers: 0,
       wrongAnswers: 0,
-      count: 5,
-      questions: usersData,
-  
-
+      questions: [],
+      fullAlphabet: [
+        "a", "i", "u", "e", "o", "ka", "ki", "ku", "ke", "ko",
+        "sa", "shi", "su", "se", "so", "ta", "chi", "tsu", "te", "to",
+        "na", "ni", "nu", "ne", "no", "ha", "hi", "fu", "he", "ho",
+        "ma", "mi", "mu", "me", "mo", "ya", "yu", "yo", "ra", "ri",
+        "ru", "re", "ro", "wa", "wo", "n"
+      ],
     };
-    
   },
-  computed:{
-    randomQuestions () {
-    usersData.sort(() => Math.random() - 0.5)
-    return false
+  created() {
+    this.shuffleQuestions();
   },
-
-  shuffledAnswers() {
-    const shuffledAnswers = [];
-
-    for (
-      const answers = Object.entries(this.questions[this.idx].answers);
-      answers.length;
-      shuffledAnswers.push(answers.splice(Math.random() * answers.length | 0, 1)[0])
-    ) ;
-
-    return shuffledAnswers;
-    
+  computed: {
+    shuffledAnswers() {
+      if (!this.questions[this.idx]) return [];
+      const currentQuestion = this.questions[this.idx];
+      const answers = new Set([currentQuestion.correctAnswer]);
+      
+      while (answers.size < 4) {
+        const randomAnswer = this.fullAlphabet[Math.floor(Math.random() * this.fullAlphabet.length)];
+        answers.add(randomAnswer);
+      }
+      
+      return Array.from(answers).sort(() => Math.random() - 0.5);
+    },
   },
-
-},
-
-  
   methods: {
-
-    answered(e) {
-      this.selectedAnswer = e.target.value;
-      if (this.selectedAnswer == this.questions[this.idx].correctAnswer) {
+    shuffleQuestions() {
+      this.questions = [...usersData].sort(() => Math.random() - 0.5);
+    },
+    answered() {
+      const currentQuestion = this.questions[this.idx];
+      if (this.selectedAnswer === currentQuestion.correctAnswer) {
         this.correctAnswers++;
-        this.questions[this.idx].guessedRight = true;
+        currentQuestion.guessedRight = true;
       } else {
         this.wrongAnswers++;
-        this.questions[this.idx].guessedRight = false;
+        currentQuestion.guessedRight = false;
       }
+      
+      // Добавляем задержку перед переходом к следующему вопросу
+      setTimeout(() => {
+        this.nextQuestion();
+      }, 1500); // Переход через 2 секунды
     },
     nextQuestion() {
-      this.idx++;
-      this.selectedAnswer = "";
-      document.querySelectorAll("input").forEach((el) => (el.checked = false));
-      
+      if (this.idx < this.questions.length - 1) {
+        this.idx++;
+        this.selectedAnswer = "";
+      }
     },
     showResults() {
       this.idx++;
-
     },
     resetQuiz() {
       this.idx = 0;
       this.selectedAnswer = "";
       this.correctAnswers = 0;
       this.wrongAnswers = 0;
-      this.questions.sort(() => Math.random() - 0.5);
-      
-      this.questions[this.idx].guessedRight = null;
-      this.questions.forEach((el) => ( 
-        el.guessedRight = null,
-        console.log(el)
-        
-        ));
-
-     
-  
+      this.shuffleQuestions();
     },
-
- 
-    
-   
   },
- 
-}
-
+};
 </script>
