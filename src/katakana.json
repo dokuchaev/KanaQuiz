@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "question": "ア",
+        "correctAnswer": "a"
+    },
+    {
+        "id": 2,
+        "question": "イ",
+        "correctAnswer": "i"
+    },
+    {
+        "id": 3,
+        "question": "ウ",
+        "correctAnswer": "u"
+    },
+    {
+        "id": 4,
+        "question": "ク",
+        "correctAnswer": "ku"
+    }
+]

@@ -824,6 +824,9 @@ video {
   display: flex;
   flex-direction: column;
   flex-basis: 50%;
+  label{
+    cursor: pointer;
+  }
 
 
 }
@@ -953,3 +956,29 @@ body{
 }
 
 
+.start-screen{
+  h2{
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color:#fff;
+  }
+}
+
+.alphabet-btn{
+  background: none;
+  border: 1px solid #fff;
+  color: #fff;
+  transition: ease-in-out .3s;
+  &:hover{
+    background: #fff;
+    color: #000;
+    transition: ease-in-out .3s;
+  }
+}
+
+.alphabet-btn-row{
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+}

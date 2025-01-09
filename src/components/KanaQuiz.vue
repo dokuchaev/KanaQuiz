@@ -1,7 +1,15 @@
 <template>
   <div>
     <h1>KanaQuiz</h1>
-    <div class="quiz-bg shadow-lg">
+    <div v-if="!selectedAlphabet" class="start-screen">
+      <h2>Choose alphabet</h2>
+      <div class="alphabet-btn-row">
+        <button @click="selectAlphabet('katakana')" class="btn alphabet-btn">Katakana</button>
+        <button @click="selectAlphabet('hiragana')" class="btn alphabet-btn">Hiragana</button>
+      </div>
+    </div>
+
+    <div v-else class="quiz-bg shadow-lg">
       <div v-if="idx < questions.length">
         <div class="progressbar">
           <div
@@ -27,9 +35,9 @@
               :for="`answer-${index}`"
               :class="[
                 'option',
-                { 'bg-green-200': selectedAnswer === answer && answer === questions[idx].correctAnswer }, // подсветка правильного ответа
-                { 'bg-red-200': selectedAnswer === answer && answer !== questions[idx].correctAnswer }, // подсветка выбранного неправильного ответа
-                { 'bg-green-200': selectedAnswer && answer === questions[idx].correctAnswer && selectedAnswer !== answer } // подсветка правильного ответа, если выбран неправильный
+                { 'bg-green-200': selectedAnswer === answer && answer === questions[idx].correctAnswer }, 
+                { 'bg-red-200': selectedAnswer === answer && answer !== questions[idx].correctAnswer }, 
+                { 'bg-green-200': selectedAnswer && answer === questions[idx].correctAnswer && selectedAnswer !== answer }
               ]"
             >
               <input
@@ -85,8 +93,6 @@
 </template>
 
 <script>
-import usersData from "../questions.json";
-
 export default {
   name: "KanaQuiz",
   data() {
@@ -96,6 +102,7 @@ export default {
       correctAnswers: 0,
       wrongAnswers: 0,
       questions: [],
+      selectedAlphabet: "",
       fullAlphabet: [
         "a", "i", "u", "e", "o", "ka", "ki", "ku", "ke", "ko",
         "sa", "shi", "su", "se", "so", "ta", "chi", "tsu", "te", "to",
@@ -106,7 +113,7 @@ export default {
     };
   },
   created() {
-    this.shuffleQuestions();
+    // No questions loaded initially
   },
   computed: {
     shuffledAnswers() {
@@ -123,8 +130,22 @@ export default {
     },
   },
   methods: {
+    async selectAlphabet(alphabet) {
+      this.selectedAlphabet = alphabet;
+      await this.loadQuestions();
+      this.shuffleQuestions();
+    },
+    async loadQuestions() {
+      const fileName = this.selectedAlphabet === 'katakana' ? 'katakana.json' : 'hiragana.json';
+      try {
+        const response = await import(`../${fileName}`);
+        this.questions = response.default;
+      } catch (error) {
+        console.error("Failed to load questions:", error);
+      }
+    },
     shuffleQuestions() {
-      this.questions = [...usersData].sort(() => Math.random() - 0.5);
+      this.questions = [...this.questions].sort(() => Math.random() - 0.5);
     },
     answered() {
       const currentQuestion = this.questions[this.idx];
@@ -136,10 +157,9 @@ export default {
         currentQuestion.guessedRight = false;
       }
       
-      // Добавляем задержку перед переходом к следующему вопросу
       setTimeout(() => {
         this.nextQuestion();
-      }, 1500); // Переход через 2 секунды
+      }, 2000);
     },
     nextQuestion() {
       if (this.idx < this.questions.length - 1) {
@@ -155,7 +175,7 @@ export default {
       this.selectedAnswer = "";
       this.correctAnswers = 0;
       this.wrongAnswers = 0;
-      this.shuffleQuestions();
+      this.selectedAlphabet = "";
     },
   },
 };
