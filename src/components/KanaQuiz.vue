@@ -1,13 +1,31 @@
 <template>
-  <div>
-    <h1>KanaQuiz</h1>
-    <div v-if="!selectedAlphabet" class="start-screen">
-      <h2>Choose alphabet</h2>
-      <div class="alphabet-btn-row">
-        <button @click="selectAlphabet('katakana')" class="btn alphabet-btn">Katakana</button>
-        <button @click="selectAlphabet('hiragana')" class="btn alphabet-btn">Hiragana</button>
+  <div class="app-wrapper">
+    
+    <div class="app-body">
+      <h1>KanaQuiz</h1>
+      <div v-if="!selectedAlphabet" class="start-screen">
+        <h2>Choose alphabet</h2>
+        <div class="alphabet-btn-row">
+          <button @click="selectAlphabet('katakana')" class="btn alphabet-btn">
+            <div>カタカナ</div>
+            <div>Katakana</div> 
+          </button>
+          <button @click="selectAlphabet('hiragana')" class="btn alphabet-btn">
+            <div>ひらがな</div>
+            <div>
+              Hiragana
+            </div>
+          </button>
+          <button @click="selectAlphabet('dakuten')" class="btn alphabet-btn">
+            <div>だくてん</div>
+            <div>
+              Dakuten
+            </div>
+          </button>
+        </div>
       </div>
-    </div>
+
+    
 
     <div v-else class="quiz-bg shadow-lg">
       <div v-if="idx < questions.length">
@@ -90,45 +108,65 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
 export default {
   name: "KanaQuiz",
   data() {
-    return {
-      idx: 0,
-      selectedAnswer: "",
-      correctAnswers: 0,
-      wrongAnswers: 0,
-      questions: [],
-      selectedAlphabet: "",
-      fullAlphabet: [
-        "a", "i", "u", "e", "o", "ka", "ki", "ku", "ke", "ko",
-        "sa", "shi", "su", "se", "so", "ta", "chi", "tsu", "te", "to",
-        "na", "ni", "nu", "ne", "no", "ha", "hi", "fu", "he", "ho",
-        "ma", "mi", "mu", "me", "mo", "ya", "yu", "yo", "ra", "ri",
-        "ru", "re", "ro", "wa", "wo", "n"
-      ],
-    };
-  },
+  return {
+    idx: 0,
+    selectedAnswer: "",
+    correctAnswers: 0,
+    wrongAnswers: 0,
+    questions: [],
+    selectedAlphabet: "",
+    fullAlphabet: [
+      "a", "i", "u", "e", "o", 
+      "ka", "ki", "ku", "ke", "ko",
+      "sa", "shi", "su", "se", "so", 
+      "ta", "chi", "tsu", "te", "to",
+      "na", "ni", "nu", "ne", "no", 
+      "ha", "hi", "fu", "he", "ho",
+      "ma", "mi", "mu", "me", "mo", 
+      "ya", "yu", "yo", 
+      "ra", "ri", "ru", "re", "ro", 
+      "wa", "wo", "n"
+    ],
+    dakutenAlphabet: [
+      "ga", "gi", "gu", "ge", "go",
+      "za", "ji", "zu", "ze", "zo",
+      "da", "ji", "zu", "de", "do",
+      "ba", "bi", "bu", "be", "bo",
+      "pa", "pi", "pu", "pe", "po"
+    ]
+  };
+},
+
   created() {
     // No questions loaded initially
   },
   computed: {
-    shuffledAnswers() {
-      if (!this.questions[this.idx]) return [];
-      const currentQuestion = this.questions[this.idx];
-      const answers = new Set([currentQuestion.correctAnswer]);
-      
-      while (answers.size < 4) {
-        const randomAnswer = this.fullAlphabet[Math.floor(Math.random() * this.fullAlphabet.length)];
-        answers.add(randomAnswer);
-      }
-      
-      return Array.from(answers).sort(() => Math.random() - 0.5);
-    },
+  shuffledAnswers() {
+    if (!this.questions[this.idx]) return [];
+    const currentQuestion = this.questions[this.idx];
+    const answers = new Set([currentQuestion.correctAnswer]);
+
+    // Use appropriate alphabet based on selectedAlphabet
+    const alphabet = this.selectedAlphabet === 'dakuten' 
+      ? this.dakutenAlphabet 
+      : this.fullAlphabet;
+
+    while (answers.size < 4) {
+      const randomAnswer = alphabet[Math.floor(Math.random() * alphabet.length)];
+      answers.add(randomAnswer);
+    }
+
+    return Array.from(answers).sort(() => Math.random() - 0.5);
   },
+},
+
   methods: {
     async selectAlphabet(alphabet) {
       this.selectedAlphabet = alphabet;
@@ -136,7 +174,11 @@ export default {
       this.shuffleQuestions();
     },
     async loadQuestions() {
-      const fileName = this.selectedAlphabet === 'katakana' ? 'katakana.json' : 'hiragana.json';
+      const fileName = this.selectedAlphabet === 'katakana'
+    ? 'katakana.json'
+    : this.selectedAlphabet === 'hiragana'
+    ? 'hiragana.json'
+    : 'dakuten.json';
       try {
         const response = await import(`../${fileName}`);
         this.questions = response.default;

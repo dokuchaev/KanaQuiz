@@ -37,6 +37,11 @@ html {
   -webkit-text-size-adjust: 100%; /* 2 */
 }
 
+html,
+body{
+  height: 100%;
+}
+
 /*
 Sections
 ========
@@ -857,6 +862,7 @@ video {
 
 h1{
   color: #5f5f5f;
+  margin-bottom: 10px;
 }
 
 body{
@@ -935,7 +941,6 @@ body{
 .p-item{
   height: 12px;
   width: 12px;
-  margin: 0 5px;
   border-radius: 3px;
 }
 
@@ -943,6 +948,8 @@ body{
   display: flex;
   justify-content: center;
   margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 5px;
 }
 .progressbar  .bg-gray-200{
   background: var(--p-item);
@@ -982,3 +989,5 @@ body{
   justify-content: center;
   gap: 25px;
 }
+
+
